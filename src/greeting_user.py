@@ -17,9 +17,9 @@ def validate_datetime_format(date_string: str) -> Optional[datetime]:
         # Проверяем формат YYYY-MM-DD HH:MM:SS
         return datetime.strptime(date_string, '%Y-%m-%d %H:%M:%S')
     except ValueError:
-        message = ('Неверный формат даты. Ожидается формат YYYY-MM-DD HH:MM:SS. '
-                   f'Вы ввели {date_string}')
-        return message
+        raise ValueError('Неверный формат даты. '
+                         'Ожидается формат YYYY-MM-DD HH:MM:SS. '
+                         f'Вы ввели {date_string}')
 
 
 def greet_user() -> str:
