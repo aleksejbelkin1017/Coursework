@@ -1,0 +1,19 @@
+from typing import Optional
+
+import pandas as pd
+
+
+def read_excel_transactions(file_path: str='data/operations.xlsx') -> Optional[list[dict]]:
+    """ Функция считывает финансовые операции из excel-файла """
+    try:
+        df = pd.read_excel(file_path)
+        return df.to_dict('records')
+    except FileNotFoundError:
+        print(f'Файл по пути "{file_path}" не найден')
+        return None
+
+
+# if __name__ == "__main__":
+#     transactions = read_excel_transactions()
+#     if transactions:
+#         print(transactions)
