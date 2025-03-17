@@ -1,34 +1,31 @@
-import pytest
-import requests
-import os
 import json
-import pandas as pd
-from unittest.mock import patch, Mock
 from datetime import datetime
-from src.utils import (validate_datetime_format, greet_user, read_excel_transactions,
-                       calculate_card_stats, get_top_transactions, convert_date_format,
-                       get_sp500_data, get_exchange_rates, convert_currency_rates,
-                       convert_stock_data, filter_transactions_by_date)
-from typing import List, Dict
-from unittest.mock import patch, mock_open
-from dotenv import load_dotenv
+from unittest.mock import Mock, mock_open, patch
+
+import pandas as pd
+import pytest
+
+from src.utils import (calculate_card_stats, convert_currency_rates, convert_date_format, convert_stock_data,
+                       filter_transactions_by_date, get_exchange_rates, get_sp500_data, get_top_transactions,
+                       greet_user, read_excel_transactions, validate_datetime_format)
+
 
 def test_validate_datetime_format_incorrect_format():
     """ Тест некорректного формата даты в функции validate_datetime_format """
     with pytest.raises(ValueError) as exc_info:
         validate_datetime_format("2018.01.15 20:27:55")
-    assert str(exc_info.value) == ("Неверный формат даты. "
-                                   "Ожидается формат YYYY-MM-DD HH:MM:SS. "
-                                   "Вы ввели 2018.01.15 20:27:55")
+    assert str(exc_info.value) == ('Неверный формат даты. '
+                                   'Ожидается формат "YYYY-MM-DD HH:MM:SS". '
+                                   'Вы ввели 2018.01.15 20:27:55')
 
 
 def test_validate_datetime_format_clear_user_input():
     """ Тест ввода пустой строки в функции validate_datetime_format """
     with pytest.raises(ValueError) as exc_info:
         validate_datetime_format("")
-    assert str(exc_info.value) == ("Неверный формат даты. "
-                                   "Ожидается формат YYYY-MM-DD HH:MM:SS. "
-                                   "Вы ввели ")
+    assert str(exc_info.value) == ('Неверный формат даты. '
+                                   'Ожидается формат "YYYY-MM-DD HH:MM:SS". '
+                                   'Вы ввели ')
 
 
 def test_validate_datetime_format_success(valid_date_string):
@@ -123,8 +120,6 @@ def test_read_excel_transactions_not_found(mock_read_excel):
             ]
     )
 ])
-
-
 def test_calculate_card_stats(transactions, expected_result):
     """ Тест для проверки функции calculate_card_stats при условии корректных данных на входе """
     result = calculate_card_stats(transactions)
@@ -153,10 +148,14 @@ def test_calculate_card_stats_invalid_input():
 @pytest.mark.parametrize("transactions, n, expected_result", [
     (
         [
-            {"Дата операции": "2025-03-17", "Сумма операции": -1000.50, "Категория": "Продукты", "Описание": "Покупка в магазине"},
-            {"Дата операции": "2025-03-18", "Сумма операции": 500.00, "Категория": "Развлечения", "Описание": "Кинотеатр"},
-            {"Дата операции": "2025-03-19", "Сумма операции": -200.75, "Категория": "Транспорт", "Описание": "Такси"},
-            {"Дата операции": "2025-03-20", "Сумма операции": 1500.00, "Категория": "Зарплата", "Описание": "Зарплата"}
+            {"Дата операции": "2025-03-17",
+             "Сумма операции": -1000.50, "Категория": "Продукты", "Описание": "Покупка в магазине"},
+            {"Дата операции": "2025-03-18",
+             "Сумма операции": 500.00, "Категория": "Развлечения", "Описание": "Кинотеатр"},
+            {"Дата операции": "2025-03-19",
+             "Сумма операции": -200.75, "Категория": "Транспорт", "Описание": "Такси"},
+            {"Дата операции": "2025-03-20",
+             "Сумма операции": 1500.00, "Категория": "Зарплата", "Описание": "Зарплата"}
         ],
         3,
         [
@@ -171,7 +170,6 @@ def test_calculate_card_stats_invalid_input():
         []
     )
 ])
-
 def test_get_top_transactions(transactions, n, expected_result):
     """ Тестирует функцию get_top_transactions """
     result = get_top_transactions(transactions, n)
@@ -213,8 +211,6 @@ def test_convert_date_format_error():
     ("02.01.2025 13:00:00", "2025-01-02 13:00:00"),
     ("03.01.2025 14:00:00", "2025-01-03 14:00:00")
 ])
-
-
 def test_convert_date_format_date_conversion(input_date, expected_date):
     """ Параметризованный тест для разных форматов дат в функции convert_date_format """
     data = [{"Дата операции": input_date}]
@@ -267,6 +263,7 @@ def test_get_sp500_data_write_to_file(mock_file):
         data = json.load(f)
         assert data == expected_api_response
 
+
 @patch('requests.get')
 def test_get_sp500_data_error(mock_get, mock_api_key):
     """ Тест для проверки обработки ошибок в функции get_sp500_data """
@@ -282,6 +279,7 @@ def test_get_sp500_data_error(mock_get, mock_api_key):
     # Проверка
     assert result is None
 
+
 @patch('requests.get')
 def test_get_sp500_data_http_error(mock_get, mock_api_key):
     """ Тест ошибки HTTP в функции get_sp500_data """
@@ -296,7 +294,8 @@ def test_get_sp500_data_http_error(mock_get, mock_api_key):
 
     # Проверки
     assert result is None
-    mock_get.assert_called_once_with('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=SPY&apikey=TEST_API_KEY')
+    mock_get.assert_called_once_with(
+        'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=SPY&apikey=TEST_API_KEY')
 
 
 @patch('requests.get')
@@ -313,7 +312,8 @@ def test_get_sp500_data_empty_response(mock_get, mock_api_key):
 
     # Проверки
     assert result is None
-    mock_get.assert_called_once_with('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=SPY&apikey=TEST_API_KEY')
+    mock_get.assert_called_once_with(
+        'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=SPY&apikey=TEST_API_KEY')
 
 
 @patch('requests.get')
