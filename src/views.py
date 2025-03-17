@@ -35,12 +35,22 @@ def answer_about_transactions(last_date: str) -> Dict:
             # Формируем вывод информации о транзакциях
             responce = {
                 "greeting":
-                    greet_user(), # Приветствие пользователя в зависимости от времени суток
+                    # Приветствие пользователя в зависимости от времени суток
+                    greet_user(),
                 "cards":
-                    calculate_card_stats(filtered_transactions), # Статистика по картам
-                "top_transactions": get_top_transactions(filtered_transactions),
-                "currency_rates": convert_currency_rates(get_exchange_rates()),
-                "stock_prices": convert_stock_data(get_sp500_data())
+                    # Статистика по картам
+                    calculate_card_stats(filtered_transactions),
+                "top_transactions":
+                    # Возвращает список самых крупных транзакций по абсолютной величине суммы
+                    get_top_transactions(filtered_transactions),
+                "currency_rates":
+                    # Преобразует словарь курсов валют в список словарей
+                    # Получает курсы валют для указанных в настройках валют относительно RUB
+                    convert_currency_rates(get_exchange_rates()),
+                "stock_prices":
+                    # Получает актуальные данные об индексе S&P 500 через API сервиса Alpha Vantage
+                    # Преобразует информацию о цене акции в требуемый формат
+                    convert_stock_data(get_sp500_data())
             }
 
             result = json.dumps(responce, ensure_ascii=False, indent=2)
