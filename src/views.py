@@ -1,9 +1,8 @@
 from typing import Dict
-from greeting_user import validate_datetime_format, greet_user
-from file_reader import read_excel_transactions
-from operations_transformation import convert_date_format, calculate_card_stats, get_top_transactions
-from filtered_operations import filter_transactions_by_date
-from external_api import get_exchange_rates, convert_currency_rates, get_sp500_data, convert_stock_data
+from utils import (validate_datetime_format, greet_user, read_excel_transactions,
+                   convert_date_format, calculate_card_stats, get_top_transactions,
+                   filter_transactions_by_date, get_exchange_rates, convert_currency_rates,
+                   get_sp500_data, convert_stock_data)
 
 import json
 
@@ -54,6 +53,5 @@ def answer_about_transactions(last_date: str) -> Dict:
 # Примеры использования:
 print(answer_about_transactions("2018-01-15 20:27:55"))  # Валидный формат
 # print(answer_about_transactions("2018.01.02 20:27:55"))  # Невалидный формат
-
 # if __name__ == '__main__':
 #     answer_about_transactions()
