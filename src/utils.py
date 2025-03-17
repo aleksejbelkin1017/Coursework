@@ -345,9 +345,10 @@ def convert_currency_rates(rates_dict: dict) -> list:
     return [
         {
             "currency": currency,
-            "rate": round(data["rate"], 2)
+            "rate": round(data.get("rate", 0), 2) if isinstance(data.get("rate"), (float, int)) else None
         }
         for currency, data in rates_dict.items()
+        if isinstance(data.get("rate"), (float, int))
     ]
 
 
@@ -366,11 +367,14 @@ def convert_stock_data(stock_info: dict) -> dict:
     stock_symbol = global_quote.get("01. symbol")
     previous_close = global_quote.get("08. previous close")
 
-    if stock_symbol and previous_close:
-        return {
-            "stock": stock_symbol,
-            "price": float(previous_close)
-        }
+    try:
+        if stock_symbol and previous_close:
+            return {
+                "stock": stock_symbol,
+                "price": float(previous_close)
+            }
+    except (ValueError, TypeError):
+        return {}
 
     return {}
 
