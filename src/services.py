@@ -1,10 +1,12 @@
 import logging
+import os
 import json
 from src.utils import read_excel_transactions
 from typing import Optional
 
 logger = logging.getLogger('services.py')
-file_handler = logging.FileHandler('logs/services.log', encoding='utf-8')
+file_name = os.path.join(os.getcwd(), 'logs', 'services.log')
+file_handler = logging.FileHandler(file_name, encoding='utf-8')
 file_formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s:\n%(message)s')
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
@@ -77,26 +79,6 @@ def search_transactions(search_word: str, path_to_file: str = 'data/operations.x
         print(f'Файл по пути "{path_to_file}" не найден!')
         return None
 
-search_word = input("Введите слово для поиска: ")
-print(search_transactions(search_word))
-
-# Пример использования:
-# transactions = [
-#     {
-#         "Дата операции": "01.01.2018 12:49:53",
-#         "Дата платежа": "01.01.2018",
-#         "Номер карты": None,
-#         "Статус": "OK",
-#         "Сумма операции": -3000.0,
-#         "Валюта операции": "RUB",
-#         "Сумма платежа": -3000.0,
-#         "Валюта платежа": "RUB",
-#         "Кэшбэк": None,
-#         "Категория": "Переводы",
-#         "MCC": None,
-#         "Описание": "Линзомат ТЦ Юность",
-#         "Бонусы (включая кэшбэк)": 0,
-#         "Округление на инвесткопилку": 0,
-#         "Сумма операции с округлением": 3000.0
-#     }
-# ]
+# Для вывода результатов на печать раскомментировать код ниже
+# search_word = input("Введите слово для поиска: ")
+# print(search_transactions(search_word))
