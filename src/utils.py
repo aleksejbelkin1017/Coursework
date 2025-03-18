@@ -8,7 +8,7 @@ import pandas as pd
 import requests
 
 logger = logging.getLogger('utils.py')
-file_handler = logging.FileHandler('logs/utils.log', encoding='utf-8')
+file_handler = logging.FileHandler('utils.log', encoding='utf-8')
 file_formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s:\n%(message)s')
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
