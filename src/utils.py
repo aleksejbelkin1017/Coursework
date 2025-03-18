@@ -71,13 +71,6 @@ def greet_user() -> str:
         return "Доброй ночи!"
 
 
-# Пример использования:
-# print(date_and_time_now())
-# Вывод будет выглядеть примерно так: "2025-03-13 17:30:50"
-# Пример использования
-# print(greet_user())
-
-
 def read_excel_transactions(file_path: str = 'data/operations.xlsx') -> Optional[list[dict]]:
     """ Функция считывает финансовые операции из excel-файла """
     logger.info('Запущена функция "read_excel_transactions".')
@@ -90,12 +83,6 @@ def read_excel_transactions(file_path: str = 'data/operations.xlsx') -> Optional
         logger.warning(f'Файл по пути "{file_path}" не найден')
         print(f'Файл по пути "{file_path}" не найден')
         return None
-
-
-# if __name__ == "__main__":
-#     transactions = read_excel_transactions()
-#     if transactions:
-#         print(transactions)
 
 
 def calculate_card_stats(transactions: List[Dict]) -> List[Dict]:
@@ -223,12 +210,6 @@ def convert_date_format(transactions: list) -> list:
         logger.error(f'Ошибка при преобразовании дат: {e}')
         print(f"Ошибка при преобразовании дат: {e}")
         return transactions  # Возвращаем исходные данные при ошибке
-
-
-# Пример использования
-# transactions_from_file = read_excel_transactions()
-# converted_transactions = convert_date_format(transactions_from_file)
-# print(converted_transactions)
 
 
 def get_sp500_data() -> dict:
@@ -442,33 +423,6 @@ def convert_stock_data(stock_info: dict) -> dict:
     return {}
 
 
-# Пример использования
-# input_data = {
-#     "Global Quote": {
-#         "01. symbol": "SPY",
-#         "02. open": "558.4900",
-#         "03. high": "559.1050",
-#         "04. low": "549.6800",
-#         "05. price": "551.4200",
-#         "06. volume": "74079414",
-#         "07. latest trading day": "2025-03-13",
-#         "08. previous close": "558.8700",
-#         "09. change": "-7.4500",
-#         "10. change percent": "-1.3330%"
-#     }
-# }
-#
-# result = convert_stock_data(input_data)
-# print(json.dumps(result, ensure_ascii=False, indent=2))
-
-
-# if __name__ == "__main__":
-    # get_sp500_data()
-    # convert_stock_data(get_sp500_data())
-    # get_exchange_rates()
-    # convert_currency_rates(x)
-
-
 def filter_transactions_by_date(transactions: list, valid_date_str: str) -> list:
     """
     Фильтрует транзакции за указанный месяц, где дата операции меньше или равна valid_date
@@ -504,46 +458,3 @@ def filter_transactions_by_date(transactions: list, valid_date_str: str) -> list
         logger.error(f'Ошибка при обработке даты: {e}')
         print(f"Ошибка при обработке даты: {e}")
         return []
-
-
-# Пример использования
-# converted_date_operations = [
-#     {
-#         'Дата операции': '2018-01-01 20:27:51',
-#         'Дата платежа': '04.01.2018',
-#         'Номер карты': '*7197',
-#         'Статус': 'OK',
-#         'Сумма операции': -316.0,
-#         'Валюта операции': 'RUB',
-#         'Сумма платежа': -316.0,
-#         'Валюта платежа': 'RUB',
-#         'Кэшбэк': None,
-#         'Категория': 'Красота',
-#         'MCC': 5977.0,
-#         'Описание': 'OOO Balid',
-#         'Бонусы (включая кэшбэк)': 6,
-#         'Округление на  инвесткопилку': 0,
-#         'Сумма операции с округлением': 316.0},
-#     {
-#         'Дата операции': '2018-01-01 12:49:53',
-#         'Дата платежа': '01.01.2018',
-#         'Номер карты': None,
-#         'Статус': 'OK',
-#         'Сумма операции': -3000.0,
-#         'Валюта операции': 'RUB',
-#         'Сумма платежа': -3000.0,
-#         'Валюта платежа': 'RUB',
-#         'Кэшбэк': None,
-#         'Категория': 'Переводы',
-#         'MCC': None,
-#         'Описание': 'Линзомат ТЦ Юность',
-#         'Бонусы (включая кэшбэк)': 0,
-#         'Округление на инвесткопилку': 0,
-#         'Сумма операции с округлением': 3000.0
-#     }
-# ]
-#
-# valid_date = '2018-01-01 20:27:55'
-#
-# filtered_transactions = filter_transactions_by_date(converted_date_operations, valid_date)
-# print(filtered_transactions)

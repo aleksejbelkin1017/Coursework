@@ -62,6 +62,3 @@ def answer_about_transactions(last_date: str) -> Dict:
 
 # Примеры использования:
 print(answer_about_transactions("2018-01-15 20:27:55"))  # Валидный формат
-# print(answer_about_transactions("2018.01.02 20:27:55"))  # Невалидный формат
-# if __name__ == '__main__':
-#     answer_about_transactions()
