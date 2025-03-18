@@ -2,8 +2,8 @@ import json
 from typing import Dict
 
 from src.utils import (calculate_card_stats, convert_currency_rates, convert_date_format, convert_stock_data,
-                       filter_transactions_by_date, get_exchange_rates, get_sp500_data, get_top_transactions, greet_user,
-                       read_excel_transactions, validate_datetime_format)
+                       filter_transactions_by_date, get_exchange_rates, get_sp500_data, get_top_transactions,
+                       greet_user, read_excel_transactions, validate_datetime_format)
 
 
 def answer_about_transactions(last_date: str) -> Dict:

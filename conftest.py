@@ -61,7 +61,8 @@ test_transactions = [
         "Описание": "Продуктовый магазин"
     }
 ]
+
+
 @pytest.fixture
 def mock_transactions():
     return test_transactions
-

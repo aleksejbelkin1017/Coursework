@@ -1,8 +1,9 @@
+import json
 import logging
 import os
-import json
-from src.utils import read_excel_transactions
 from typing import Optional
+
+from src.utils import read_excel_transactions
 
 logger = logging.getLogger('services.py')
 file_name = os.path.join(os.getcwd(), 'logs', 'services.log')
@@ -21,7 +22,7 @@ def search_transactions(search_word: str, path_to_file: str = 'data/operations.x
     :param path_to_file: путь к файлу с транзакциями
     :return: JSON с результатами поиска или сообщение об отсутствии результатов
     """
-    logger.info(f'Запущена функция "search_transactions".')
+    logger.info('Запущена функция "search_transactions".')
     logger.debug(f'Приводим слово "{search_word}" к нижнему регистру для нечувствительного поиска.')
     search_word = search_word.lower()
 
@@ -47,7 +48,8 @@ def search_transactions(search_word: str, path_to_file: str = 'data/operations.x
             logger.debug('Получаем значения для ключей "Категория" и "Описание". \n'
                          'Приводим значения '
                          f'"{transaction.get("Категория", "")}" и '
-                         f'"{transaction.get("Описание", "")}" для ключей "Категория" и "Описание" к нижнему регистру.')
+                         f'"{transaction.get("Описание", "")}" '
+                         'для ключей "Категория" и "Описание" к нижнему регистру.')
 
             category_value = transaction.get("Категория", "")
 
